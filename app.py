@@ -72,7 +72,7 @@ def fogos_kml():
 
 
 # ----------------------------
-# GEOJSON (DEBUG PASSO 1)
+# GEOJSON (DEBUG BÁSICO)
 # ----------------------------
 @app.get("/fogos.geojson")
 def fogos_geojson():
@@ -81,5 +81,5 @@ def fogos_geojson():
 
     return {
         "count": len(data),
-        "first_item": data[0] if data else None
+        "items": data
     }
