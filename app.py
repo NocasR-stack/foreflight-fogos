@@ -27,36 +27,21 @@ def root():
 @app.get("/fogos.kml")
 def fogos_kml():
 
-    global _cache_kml, _cache_time
-
-    now = time.time()
-
-    if _cache_kml and (now - _cache_time) < CACHE_SECONDS:
-        return Response(
-            content=_cache_kml,
-            media_type="application/vnd.google-earth.kml+xml",
-            headers={
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Pragma": "no-cache",
-                "Expires": "0"
-            }
-        )
-
     data = get_occurrences()
     enriched = [enrich_occurrence(o) for o in data]
 
     kml = build_kml(enriched)
 
-    _cache_kml = kml
-    _cache_time = now
+    now = str(int(time.time()))
 
     return Response(
         content=kml,
         media_type="application/vnd.google-earth.kml+xml",
         headers={
-            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
             "Pragma": "no-cache",
-            "Expires": "0"
+            "Expires": "0",
+            "ETag": now
         }
     )
 
