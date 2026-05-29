@@ -37,8 +37,6 @@ def fogos_kml():
     global _cache_kml, _cache_time
 
     now = time.time()
-
-    # cache-buster para evitar caching agressivo do cliente
     cache_buster = str(int(now))
 
     if _cache_kml and (now - _cache_time) < CACHE_SECONDS:
@@ -74,59 +72,14 @@ def fogos_kml():
 
 
 # ----------------------------
-# GEOJSON (DEBUG / FUTURO)
+# GEOJSON (DEBUG PASSO 1)
 # ----------------------------
 @app.get("/fogos.geojson")
 def fogos_geojson():
-    global _cache_geojson, _cache_time
-
-    now = time.time()
-
-    if _cache_geojson and (now - _cache_time) < CACHE_SECONDS:
-        return JSONResponse(_cache_geojson)
 
     data = get_occurrences()
-    enriched = [enrich_occurrence(o) for o in data]
 
-    features = []
-
-    for o in enriched:
-        try:
-            lat = float(o.get("lat"))
-            lon = float(o.get("lon"))
-
-            features.append({
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [lon, lat]
-                },
-                "properties": {
-                    "id": o.get("id"),
-                    "parish": o.get("parish"),
-                    "status_code": o.get("status_code"),
-                    "aerial": o.get("aerial"),
-                    "ground": o.get("ground"),
-                    "operatives": o.get("operatives"),
-                    "lat_dms": o.get("lat_dms"),
-                    "lon_dms": o.get("lon_dms"),
-                    "wind_dir": o.get("wind_dir"),
-                    "wind_speed": o.get("wind_speed"),
-                    "temp": o.get("temp"),
-                    "qnh": o.get("qnh"),
-                    "meteo_station": o.get("meteo_station")
-                }
-            })
-
-        except Exception:
-            continue
-
-    result = {
-        "type": "FeatureCollection",
-        "features": features
+    return {
+        "count": len(data),
+        "first_item": data[0] if data else None
     }
-
-    _cache_geojson = result
-    _cache_time = now
-
-    return JSONResponse(result)
