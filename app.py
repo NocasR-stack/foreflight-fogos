@@ -24,7 +24,15 @@ def fogos_kml():
     now = time.time()
 
     if _cache_kml and (now - _cache_time) < CACHE_SECONDS:
-        return Response(content=_cache_kml, media_type="application/vnd.google-earth.kml+xml")
+        return Response(
+            content=_cache_kml,
+            media_type="application/vnd.google-earth.kml+xml",
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
 
     data = get_occurrences()
 
@@ -35,7 +43,15 @@ def fogos_kml():
     _cache_kml = kml
     _cache_time = now
 
-    return Response(content=kml, media_type="application/vnd.google-earth.kml+xml")
+    return Response(
+        content=kml,
+        media_type="application/vnd.google-earth.kml+xml",
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        }
+    )
 
 
 # ----------------------------
@@ -51,33 +67,41 @@ def fogos_geojson():
         return JSONResponse(_cache_geojson)
 
     data = get_occurrences()
+
     enriched = [enrich_occurrence(o) for o in data]
 
     features = []
 
     for o in enriched:
-        features.append({
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [o["lon"], o["lat"]]
-            },
-            "properties": {
-                "id": o.get("id"),
-                "parish": o.get("parish"),
-                "status_code": o.get("status_code"),
-                "aerial": o.get("aerial"),
-                "ground": o.get("ground"),
-                "operatives": o.get("operatives"),
-                "lat_dms": o.get("lat_dms"),
-                "lon_dms": o.get("lon_dms"),
-                "wind_dir": o.get("wind_dir"),
-                "wind_speed": o.get("wind_speed"),
-                "temp": o.get("temp"),
-                "qnh": o.get("qnh"),
-                "meteo_station": o.get("meteo_station")
-            }
-        })
+        try:
+            lat = float(o.get("lat"))
+            lon = float(o.get("lon"))
+
+            features.append({
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [lon, lat]
+                },
+                "properties": {
+                    "id": o.get("id"),
+                    "parish": o.get("parish"),
+                    "status_code": o.get("status_code"),
+                    "aerial": o.get("aerial"),
+                    "ground": o.get("ground"),
+                    "operatives": o.get("operatives"),
+                    "lat_dms": o.get("lat_dms"),
+                    "lon_dms": o.get("lon_dms"),
+                    "wind_dir": o.get("wind_dir"),
+                    "wind_speed": o.get("wind_speed"),
+                    "temp": o.get("temp"),
+                    "qnh": o.get("qnh"),
+                    "meteo_station": o.get("meteo_station")
+                }
+            })
+
+        except Exception:
+            continue
 
     result = {
         "type": "FeatureCollection",
@@ -97,5 +121,8 @@ def fogos_geojson():
 def root():
     return {
         "status": "ok",
-        "endpoints": ["/fogos.kml", "/fogos.geojson"]
+        "endpoints": [
+            "/fogos.kml",
+            "/fogos.geojson"
+        ]
     }
