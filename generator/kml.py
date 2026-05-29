@@ -19,21 +19,38 @@ def get_fire_state(f):
         return "ACTIVE"
 
     if code == 5:
+        return "ACTIVE"
+
+    if code == 4:
         return "INITIAL"
 
+    if code == 3:
+        return "CLOSED"
+    
+    if code == 2:
+        return "FAKE ALERT"
+    
+    if code == 1:
+        return "FAKE ALARM"
     return "UNKNOWN"
 
 
 def get_style_id(state):
 
     if state == "SURVAILANCE":
-        return "green"
+        return "blue"
 
     if state == "CONCLUSION":
         return "grey"
 
+    if state == "FALSE ALERT":
+        return "grey"
+
+    if state == "FALSE ALARM":
+        return "grey"
+
     if state == "RESOLUTION":
-        return "green"
+        return "blue"
 
     if state == "ACTIVE":
         return "red"
