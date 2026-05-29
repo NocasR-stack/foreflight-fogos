@@ -1,64 +1,66 @@
-
 from providers.weather import get_weather
 
 
 def get_fire_state(f):
 
-    code = f.get("status_code")
+    code = int(f.get("status_code", 0))
 
-    if code == 9:
-        return "SURVAILANCE"
-
-    if code == 8:
-        return "CONCLUSION"
-
-    if code == 7:
-        return "RESOLUTION"
-
-    if code == 6:
-        return "ACTIVE"
-
-    if code == 5:
-        return "ACTIVE"
-
-    if code == 4:
-        return "INITIAL"
-
+    if code == 1:
+        return "FALSE ALARM"
+    if code == 2:
+        return "FALSE ALERT"
     if code == 3:
         return "CLOSED"
-    
-    if code == 2:
-        return "FAKE ALERT"
-    
-    if code == 1:
-        return "FAKE ALARM"
+    if code == 4:
+        return "INITIAL"
+    if code in (5, 6):
+        return "ACTIVE"
+    if code == 7:
+        return "RESOLUTION"
+    if code == 8:
+        return "CONCLUSION"
+    if code == 9:
+        return "SURVEILLANCE"
+
     return "UNKNOWN"
 
 
 def get_style_id(state):
 
-    if state == "SURVAILANCE":
+    if state in ("FALSE ALARM", "FALSE ALERT"):
+        return "grey"
+
+    if state == "CLOSED":
+        return "green"
+
+    if state == "INITIAL":
+        return "orange"
+
+    if state == "ACTIVE":
+        return "red"
+
+    if state == "RESOLUTION":
         return "blue"
 
     if state == "CONCLUSION":
         return "grey"
 
-    if state == "FALSE ALERT":
-        return "grey"
-
-    if state == "FALSE ALARM":
-        return "grey"
-
-    if state == "RESOLUTION":
+    if state == "SURVEILLANCE":
         return "blue"
 
-    if state == "ACTIVE":
-        return "red"
+    return "grey"
 
-    if state == "INITIAL":
-        return "orange"
 
-    return "blue"
+def clean_freguesia(name: str):
+
+    if not name:
+        return "Sem freguesia"
+
+    # remove lixo conhecido do API
+    name = name.split(" Sem informação")[0]
+    name = name.split(" Informação")[0]
+
+    return name.strip()
 
 
 def build_kml(occurrences):
@@ -85,16 +87,16 @@ def build_kml(occurrences):
         </IconStyle>
     </Style>
 
-    <Style id="grey">
+    <Style id="blue">
         <IconStyle>
-            <color>ff808080</color>
-            <scale>1.0</scale>
+            <color>ffff0000</color>
+            <scale>1.1</scale>
         </IconStyle>
     </Style>
 
-    <Style id="blue">
+    <Style id="grey">
         <IconStyle>
-            <color>ffffa500</color>
+            <color>ff808080</color>
             <scale>1.0</scale>
         </IconStyle>
     </Style>
@@ -104,7 +106,8 @@ def build_kml(occurrences):
 
     for f in occurrences:
 
-        name = f.get("parish") or "Sem freguesia"
+        raw_name = f.get("parish") or "Sem freguesia"
+        name = clean_freguesia(raw_name)
 
         lon = f.get("lon")
         lat = f.get("lat")
@@ -115,7 +118,6 @@ def build_kml(occurrences):
         state = get_fire_state(f)
         style_id = get_style_id(state)
 
-        # 🔥 WEATHER (modelo interpolado)
         wx = get_weather(lat, lon)
 
         aerial = f.get("aerial", 0)
@@ -140,7 +142,7 @@ def build_kml(occurrences):
 
         <b>Distrito:</b> {f.get('district', '')}<br/>
         <b>Concelho:</b> {f.get('municipality', '')}<br/>
-        <b>Freguesia:</b> {f.get('parish', '')}<br/>
+        <b>Freguesia:</b> {name}<br/>
         <b>Tipo:</b> {f.get('nature_desc', '')}<br/>
         ]]>
         """
