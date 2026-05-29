@@ -15,13 +15,31 @@ CACHE_SECONDS = 30
 
 
 # ----------------------------
-# KML
+# ROOT (HEALTH CHECK + HEAD FIX)
+# ----------------------------
+@app.api_route("/", methods=["GET", "HEAD"])
+def root():
+    return {
+        "status": "ok",
+        "service": "fogos-api",
+        "endpoints": [
+            "/fogos.kml",
+            "/fogos.geojson"
+        ]
+    }
+
+
+# ----------------------------
+# KML (FOREFLIGHT OPTIMIZED)
 # ----------------------------
 @app.get("/fogos.kml")
 def fogos_kml():
     global _cache_kml, _cache_time
 
     now = time.time()
+
+    # cache-buster para evitar caching agressivo do cliente
+    cache_buster = str(int(now))
 
     if _cache_kml and (now - _cache_time) < CACHE_SECONDS:
         return Response(
@@ -30,12 +48,12 @@ def fogos_kml():
             headers={
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Pragma": "no-cache",
-                "Expires": "0"
+                "Expires": "0",
+                "X-Cache-Buster": cache_buster
             }
         )
 
     data = get_occurrences()
-
     enriched = [enrich_occurrence(o) for o in data]
 
     kml = build_kml(enriched)
@@ -49,13 +67,14 @@ def fogos_kml():
         headers={
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
-            "Expires": "0"
+            "Expires": "0",
+            "X-Cache-Buster": cache_buster
         }
     )
 
 
 # ----------------------------
-# GEOJSON
+# GEOJSON (DEBUG / FUTURO)
 # ----------------------------
 @app.get("/fogos.geojson")
 def fogos_geojson():
@@ -67,7 +86,6 @@ def fogos_geojson():
         return JSONResponse(_cache_geojson)
 
     data = get_occurrences()
-
     enriched = [enrich_occurrence(o) for o in data]
 
     features = []
@@ -112,17 +130,3 @@ def fogos_geojson():
     _cache_time = now
 
     return JSONResponse(result)
-
-
-# ----------------------------
-# ROOT
-# ----------------------------
-@app.get("/")
-def root():
-    return {
-        "status": "ok",
-        "endpoints": [
-            "/fogos.kml",
-            "/fogos.geojson"
-        ]
-    }
