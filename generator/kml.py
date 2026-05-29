@@ -57,8 +57,8 @@ def clean_freguesia(name: str):
         return "Sem freguesia"
 
     # remove lixo conhecido do API
-    name = name.split(" Sem informação")[0]
-    name = name.split(" Informação")[0]
+    name = name.split(" Sem informação do número de meios neste momento.")[0]
+    name = name.split(" Informação recolhida via Fogos.pt")[0]
 
     return name.strip()
 
