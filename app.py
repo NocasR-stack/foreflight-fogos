@@ -8,36 +8,28 @@ from generator.kml import build_kml
 
 app = FastAPI()
 
-_cache_geojson = None
 _cache_kml = None
 _cache_time = 0
 CACHE_SECONDS = 30
 
 
-# ----------------------------
-# ROOT (HEALTH CHECK + HEAD FIX)
-# ----------------------------
 @app.api_route("/", methods=["GET", "HEAD"])
 def root():
     return {
         "status": "ok",
         "service": "fogos-api",
         "endpoints": [
-            "/fogos.kml",
-            "/fogos.geojson"
+            "/fogos.kml"
         ]
     }
 
 
-# ----------------------------
-# KML (FOREFLIGHT OPTIMIZED)
-# ----------------------------
 @app.get("/fogos.kml")
 def fogos_kml():
+
     global _cache_kml, _cache_time
 
     now = time.time()
-    cache_buster = str(int(now))
 
     if _cache_kml and (now - _cache_time) < CACHE_SECONDS:
         return Response(
@@ -46,8 +38,7 @@ def fogos_kml():
             headers={
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Pragma": "no-cache",
-                "Expires": "0",
-                "X-Cache-Buster": cache_buster
+                "Expires": "0"
             }
         )
 
@@ -65,18 +56,13 @@ def fogos_kml():
         headers={
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
-            "Expires": "0",
-            "X-Cache-Buster": cache_buster
+            "Expires": "0"
         }
     )
 
 
-# ----------------------------
-# GEOJSON (DEBUG BÁSICO)
-# ----------------------------
 @app.get("/fogos.geojson")
 def fogos_geojson():
-
     data = get_occurrences()
 
     return {
