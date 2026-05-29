@@ -3,13 +3,11 @@ from fastapi.responses import Response, JSONResponse
 import time
 
 from providers.ptdata import get_occurrences
+from providers.meteo import enrich_occurrence
 from generator.kml import build_kml
 
 app = FastAPI()
 
-# ----------------------------
-# CACHE (melhora performance)
-# ----------------------------
 _cache_geojson = None
 _cache_kml = None
 _cache_time = 0
@@ -17,7 +15,7 @@ CACHE_SECONDS = 30
 
 
 # ----------------------------
-# KML ENDPOINT (ForeFlight)
+# KML
 # ----------------------------
 @app.get("/fogos.kml")
 def fogos_kml():
@@ -29,7 +27,10 @@ def fogos_kml():
         return Response(content=_cache_kml, media_type="application/vnd.google-earth.kml+xml")
 
     data = get_occurrences()
-    kml = build_kml(data)
+
+    enriched = [enrich_occurrence(o) for o in data]
+
+    kml = build_kml(enriched)
 
     _cache_kml = kml
     _cache_time = now
@@ -38,7 +39,7 @@ def fogos_kml():
 
 
 # ----------------------------
-# GEOJSON ENDPOINT (novo motor)
+# GEOJSON
 # ----------------------------
 @app.get("/fogos.geojson")
 def fogos_geojson():
@@ -50,28 +51,31 @@ def fogos_geojson():
         return JSONResponse(_cache_geojson)
 
     data = get_occurrences()
+    enriched = [enrich_occurrence(o) for o in data]
 
     features = []
 
-    for o in data:
+    for o in enriched:
         features.append({
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [o.get("lon"), o.get("lat")]
+                "coordinates": [o["lon"], o["lat"]]
             },
             "properties": {
                 "id": o.get("id"),
                 "parish": o.get("parish"),
-                "district": o.get("district"),
-                "municipality": o.get("municipality"),
-                "nature": o.get("nature_desc"),
-                "status": o.get("status"),
                 "status_code": o.get("status_code"),
                 "aerial": o.get("aerial"),
                 "ground": o.get("ground"),
                 "operatives": o.get("operatives"),
-                "started_at": o.get("started_at")
+                "lat_dms": o.get("lat_dms"),
+                "lon_dms": o.get("lon_dms"),
+                "wind_dir": o.get("wind_dir"),
+                "wind_speed": o.get("wind_speed"),
+                "temp": o.get("temp"),
+                "qnh": o.get("qnh"),
+                "meteo_station": o.get("meteo_station")
             }
         })
 
@@ -87,15 +91,11 @@ def fogos_geojson():
 
 
 # ----------------------------
-# HEALTH CHECK
+# ROOT
 # ----------------------------
 @app.get("/")
 def root():
     return {
         "status": "ok",
-        "service": "foreflight-fogos",
-        "endpoints": [
-            "/fogos.kml",
-            "/fogos.geojson"
-        ]
+        "endpoints": ["/fogos.kml", "/fogos.geojson"]
     }
