@@ -30,13 +30,13 @@ SUBREGIONAL_FREQUENCIES = {
 
     "Viseu Dão e Lafões": {"freq": "125.805", "municipalities": ["Viseu","Mangualde","Nelas","Tondela","Vouzela"]},
 
-    "Beiras e Serra da Estrela": {"freq": "123.930", "municipalities": ["Almeida","Belmonte","Celorico da Beira","Covilhã","Figueira de Castelo Rodrigo","Fornos de Algodres","Fundão","Gouveia","Guarda","Manteigas","Mêda","Pinhel","Sabugal","Seia","Trancoso"]}
+    "Beiras e Serra da Estrela": {"freq": "123.930", "municipalities": ["Almeida","Belmonte","Celorico da Beira","Covilhã","Figueira de Castelo Rodrigo","Fornos de Algodres","Fundão","Gouveia","Guarda","Manteigas","Mêda","Pinhel","Sabugal","Seia","Trancoso"]},
 
     "Região de Coimbra": {"freq": "129.805", "municipalities": ["Coimbra","Arganil","Cantanhede","Figueira da Foz","Figueiró dos Vinhos","Lousã","Mira","Montemor-o-Velho","Penacova","Soure","Tábua"]},
     
     "Região de Leiria": {"freq": "124.705", "municipalities": ["Leiria","Pombal","Batalha","Marinha Grande"]},
 
-    "Beira Baixa": {"freq": "123.655", "municipalities": ["Castelo Branco","Idanha-a-Nova","Oleiros","Penamacor","Proença-a-Nova","Sertã","Vila de Rei","Vila Velha de Ródão"]}
+    "Beira Baixa": {"freq": "123.655", "municipalities": ["Castelo Branco","Idanha-a-Nova","Oleiros","Penamacor","Proença-a-Nova","Sertã","Vila de Rei","Vila Velha de Ródão"]},
 
     "Médio Tejo": {"freq": "123.160", "municipalities": ["Abrantes","Constância","Entroncamento","Ferreira do Zêzere","Sardoal","Vila Nova da Barquinha","Tomar","Torres Novas","Ourém"]},
 
@@ -56,7 +56,7 @@ SUBREGIONAL_FREQUENCIES = {
 
     "Baixo Alentejo": {"freq": "124.705", "municipalities": ["Beja","Moura","Mértola","Ourique"]},
 
-    "Algarve": {"freq": "129.805", "municipalities": ["Faro","Albufeira","Castro Marim","Silves","Monchique","Vila Real de Santo António","Alcoutim","Portimão","Loulé","Tavira","Lagos"]}
+    "Algarve": {"freq": "129.805", "municipalities": ["Faro","Albufeira","Castro Marim","Silves","Monchique","Vila Real de Santo António","Alcoutim","Portimão","Loulé","Tavira","Lagos"]},
 }
 
 
