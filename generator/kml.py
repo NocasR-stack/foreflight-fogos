@@ -24,27 +24,27 @@ SUBREGIONAL_FREQUENCIES = {
 
     "Tâmega e Sousa": {"freq": "122.830", "municipalities": ["Amarante","Baião","Felgueiras","Lousada","Marco de Canaveses","Paços de Ferreira","Paredes","Penafiel"]},
 
-    "Douro": {"freq": "120.940", "municipalities": ["Alijó","Lamego","Peso da Régua","Sabrosa","Tabuaço"]},
+    "Douro": {"freq": "120.940", "municipalities": ["Alijó","Lamego","Peso da Régua","Sabrosa","Vila Real","Tabuaço"]},
 
-    "Região de Aveiro": {"freq": "126.155", "municipalities": ["Aveiro","Águeda","Ílhavo","Ovar","Vagos"]},
+    "Região de Aveiro": {"freq": "126.155", "municipalities": ["Anadia","Aveiro","Águeda","Estarreja","Ílhavo","Mealhada","Murtosa","Oliveira do Bairro","Ovar","Sever do Vouga","Vagos"]},
 
     "Viseu Dão e Lafões": {"freq": "125.805", "municipalities": ["Viseu","Mangualde","Nelas","Tondela","Vouzela"]},
 
-    "Beiras e Serra da Estrela": {"freq": "123.930", "municipalities": ["Covilhã","Fundão","Guarda","Seia"]},
+    "Beiras e Serra da Estrela": {"freq": "123.930", "municipalities": ["Almeida","Belmonte","Celorico da Beira","Covilhã","Figueira de Castelo Rodrigo","Fornos de Algodres","Fundão","Gouveia","Guarda","Manteigas","Mêda","Pinhel","Sabugal","Seia","Trancoso"]}
 
-    "Região de Coimbra": {"freq": "129.805", "municipalities": ["Coimbra","Arganil","Figueira da Foz","Lousã"]},
-
+    "Região de Coimbra": {"freq": "129.805", "municipalities": ["Coimbra","Arganil","Cantanhede","Figueira da Foz","Figueiró dos Vinhos","Lousã","Mira","Montemor-o-Velho","Penacova","Soure","Tábua"]},
+    
     "Região de Leiria": {"freq": "124.705", "municipalities": ["Leiria","Pombal","Batalha","Marinha Grande"]},
 
-    "Beira Baixa": {"freq": "123.655", "municipalities": ["Castelo Branco","Oleiros","Sertã","Vila de Rei"]},
+    "Beira Baixa": {"freq": "123.655", "municipalities": ["Castelo Branco","Idanha-a-Nova","Oleiros","Penamacor","Proença-a-Nova","Sertã","Vila de Rei","Vila Velha de Ródão"]}
 
-    "Médio Tejo": {"freq": "123.160", "municipalities": ["Abrantes","Tomar","Torres Novas","Ourém"]},
+    "Médio Tejo": {"freq": "123.160", "municipalities": ["Abrantes","Constância","Entroncamento","Ferreira do Zêzere","Sardoal","Vila Nova da Barquinha","Tomar","Torres Novas","Ourém"]},
 
-    "Oeste": {"freq": "124.955", "municipalities": ["Torres Vedras","Peniche","Nazaré","Caldas da Rainha"]},
+    "Oeste": {"freq": "124.955", "municipalities": ["Alcobaça","Bombarral","Cadaval","Lourinhã","Óbidos","Torres Vedras","Peniche","Nazaré","Caldas da Rainha"]},
 
     "Lezíria do Tejo": {"freq": "120.940", "municipalities": ["Benavente","Coruche","Santarém","Rio Maior","Chamusca","Almeirim","Alpiarça","Cartaxo","Golegã","Salvaterra de Magos","Azambuja"]},
 
-    "Grande Lisboa": {"freq": "125.805", "municipalities": ["Lisboa","Sintra","Loures","Cascais","Oeiras"]},
+    "Grande Lisboa": {"freq": "125.805", "municipalities": ["Lisboa","Sintra","Loures","Cascais","Oeiras","Mafra","Amadora","Odivelas","Vila Franca de Xira"]},
 
     "Península de Setúbal": {"freq": "122.830", "municipalities": ["Setúbal","Palmela","Sesimbra","Seixal","Almada"]},
 
@@ -56,7 +56,7 @@ SUBREGIONAL_FREQUENCIES = {
 
     "Baixo Alentejo": {"freq": "124.705", "municipalities": ["Beja","Moura","Mértola","Ourique"]},
 
-    "Algarve": {"freq": "129.805", "municipalities": ["Faro","Portimão","Loulé","Tavira","Lagos"]}
+    "Algarve": {"freq": "129.805", "municipalities": ["Faro","Albufeira","Castro Marim","Silves","Monchique","Vila Real de Santo António","Alcoutim","Portimão","Loulé","Tavira","Lagos"]}
 }
 
 
