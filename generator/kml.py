@@ -74,7 +74,7 @@ def get_fire_state(f):
         3: "DISPATCHED",
         4: "INITIAL",
         5: "ACTIVE",
-        6: "ARRIVAL TO",
+        6: "ARRIVAL T.O.",
         7: "RESOLUTION",
         8: "CONCLUSION",
         9: "SURVEILLANCE"
@@ -93,7 +93,7 @@ def get_style_id(state):
         "CLOSED": "green",
         "DISPATCHED": "orange",
         "INITIAL": "orange",
-        "ARRIVAL TO": "red",
+        "ARRIVAL T.O.": "red",
         "ACTIVE": "red",
         "RESOLUTION": "blue",
         "CONCLUSION": "grey",
