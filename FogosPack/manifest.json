@@ -1,10 +1,12 @@
 {
-  "version": "1.0",
   "name": "Fogos PT",
-  "description": "Camada de incêndios ativos em Portugal em tempo real.",
+  "abbreviation": "Fogos",
+  "version": 1.0,
+  "organizationName": "AGM",
   "layers": [
     {
       "name": "Fogos PT",
+      "type": "kml",
       "url": "https://foreflight-fogos.onrender.com/fogos.kml",
       "refreshInterval": 60
     }
