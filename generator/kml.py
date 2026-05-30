@@ -18,45 +18,45 @@ SUBREGIONAL_FREQUENCIES = {
 
     "Alto Tâmega e Barroso": {"freq": "125.355", "municipalities": ["Boticas","Chaves","Montalegre","Ribeira de Pena","Valpaços","Vila Pouca de Aguiar"]},
 
-    "Terras de Trás-os-Montes": {"freq": "123.160", "municipalities": ["Bragança","Mirandela","Macedo de Cavaleiros","Vinhais"]},
+    "Terras de Trás-os-Montes": {"freq": "123.160", "municipalities": ["Alfândega da Fé","Bragança","Macedo de Cavaleiros","Mirandela","Mogadouro","Vila Flor","Vimioso","Vinhais"]},
 
-    "Área Metropolitana do Porto": {"freq": "129.690", "municipalities": ["Porto","Maia","Matosinhos","Vila Nova de Gaia","Gondomar","Valongo","Póvoa de Varzim","Vila do Conde"]},
+    "Área Metropolitana do Porto": {"freq": "129.690", "municipalities": ["Arouca","Espinho","Gondomar","Maia","Matosinhos","Oliveira de Azeméis","Paredes","Porto","Póvoa de Varzim","Santa Maria da Feira","Santo Tirso","São João da Madeira","Trofa","Vale de Cambra","Valongo","Vila do Conde","Vila Nova de Gaia"]},
 
-    "Tâmega e Sousa": {"freq": "122.830", "municipalities": ["Amarante","Baião","Felgueiras","Lousada","Marco de Canaveses","Paços de Ferreira","Paredes","Penafiel"]},
+    "Tâmega e Sousa": {"freq": "122.830", "municipalities": ["Amarante","Baião","Castelo de Paiva","Celorico de Basto","Felgueiras","Lousada","Marco de Canaveses","Paços de Ferreira","Paredes","Penafiel","Resende","Felgueiras"]},    "Tâmega e Sousa": {"freq": "122.830", "municipalities": ["Amarante","Baião","Felgueiras","Lousada","Marco de Canaveses","Paços de Ferreira","Paredes","Penafiel"]},
 
-    "Douro": {"freq": "120.940", "municipalities": ["Alijó","Lamego","Peso da Régua","Sabrosa","Vila Real","Tabuaço"]},
+    "Douro": {"freq": "120.940", "municipalities": ["Alijó","Armamar","Carrazeda de Ansiães","Freixo de Espada à Cinta","Lamego","Mesão Frio","Moimenta da Beira","Murça","Penedono","Peso da Régua","Sabrosa","Santa Marta de Penaguião","São João da Pesqueira","Sernancelhe","Tabuaço","Torre de Moncorvo","Vila Nova de Foz Côa","Vila Real"]},
 
-    "Região de Aveiro": {"freq": "126.155", "municipalities": ["Anadia","Aveiro","Águeda","Estarreja","Ílhavo","Mealhada","Murtosa","Oliveira do Bairro","Ovar","Sever do Vouga","Vagos"]},
+    "Região de Aveiro": {"freq": "126.155", "municipalities": ["Águeda","Albergaria-a-Velha","Anadia","Aveiro","Estarreja","Ílhavo","Mealhada","Murtosa","Oliveira do Bairro","Ovar","Sever do Vouga","Vagos"]},
 
-    "Viseu Dão e Lafões": {"freq": "125.805", "municipalities": ["Viseu","Mangualde","Nelas","Tondela","Vouzela"]},
+    "Viseu Dão e Lafões": {"freq": "125.805", "municipalities": ["Aguiar da Beira","Carregal do Sal","Castro Daire","Mangualde","Nelas","Oliveira de Frades","Penalva do Castelo","São Pedro do Sul","Sátão","Tondela","Vila Nova de Paiva","Viseu","Vouzela"]},
 
     "Beiras e Serra da Estrela": {"freq": "123.930", "municipalities": ["Almeida","Belmonte","Celorico da Beira","Covilhã","Figueira de Castelo Rodrigo","Fornos de Algodres","Fundão","Gouveia","Guarda","Manteigas","Mêda","Pinhel","Sabugal","Seia","Trancoso"]},
 
-    "Região de Coimbra": {"freq": "129.805", "municipalities": ["Coimbra","Arganil","Cantanhede","Figueira da Foz","Figueiró dos Vinhos","Lousã","Mira","Montemor-o-Velho","Penacova","Soure","Tábua"]},
-    
-    "Região de Leiria": {"freq": "124.705", "municipalities": ["Leiria","Pombal","Batalha","Marinha Grande"]},
+    "Região de Coimbra": {"freq": "129.805", "municipalities": ["Arganil","Cantanhede","Coimbra","Condeixa-a-Nova","Figueira da Foz","Figueiró dos Vinhos","Góis","Lousã","Mira","Miranda do Corvo","Montemor-o-Velho","Mortágua","Oliveira do Hospital","Penacova","Penela","Soure","Tábua","Vila Nova de Poiares"]},
 
-    "Beira Baixa": {"freq": "123.655", "municipalities": ["Castelo Branco","Idanha-a-Nova","Oleiros","Penamacor","Proença-a-Nova","Sertã","Vila de Rei","Vila Velha de Ródão"]},
+    "Região de Leiria": {"freq": "124.705", "municipalities": ["Alcobaça","Batalha","Leiria","Marinha Grande","Nazaré","Óbidos","Pombal","Porto de Mós"]},
 
-    "Médio Tejo": {"freq": "123.160", "municipalities": ["Abrantes","Constância","Entroncamento","Ferreira do Zêzere","Sardoal","Vila Nova da Barquinha","Tomar","Torres Novas","Ourém"]},
+    "Beira Baixa": {"freq": "123.655", "municipalities": ["Belmonte","Castelo Branco","Covilhã","Fundão","Idanha-a-Nova","Oleiros","Penamacor","Proença-a-Nova","Sertã","Vila de Rei","Vila Velha de Ródão"]},
 
-    "Oeste": {"freq": "124.955", "municipalities": ["Alcobaça","Bombarral","Cadaval","Lourinhã","Óbidos","Torres Vedras","Peniche","Nazaré","Caldas da Rainha"]},
+    "Médio Tejo": {"freq": "123.160", "municipalities": ["Abrantes","Alcanena","Constância","Entroncamento","Ferreira do Zêzere","Mação","Ourém","Sardoal","Tomar","Torres Novas","Vila Nova da Barquinha"]},
 
-    "Lezíria do Tejo": {"freq": "120.940", "municipalities": ["Benavente","Coruche","Santarém","Rio Maior","Chamusca","Almeirim","Alpiarça","Cartaxo","Golegã","Salvaterra de Magos","Azambuja"]},
+    "Oeste": {"freq": "124.955", "municipalities": ["Alcobaça","Alenquer","Arruda dos Vinhos","Bombarral","Cadaval","Caldas da Rainha","Lourinhã","Nazaré","Óbidos","Peniche","Sobral de Monte Agraço","Torres Vedras"]},
 
-    "Grande Lisboa": {"freq": "125.805", "municipalities": ["Lisboa","Sintra","Loures","Cascais","Oeiras","Mafra","Amadora","Odivelas","Vila Franca de Xira"]},
+    "Lezíria do Tejo": {"freq": "120.940", "municipalities": ["Almeirim","Alpiarça","Azambuja","Benavente","Cartaxo","Chamusca","Coruche","Golegã","Rio Maior","Salvaterra de Magos","Santarém"]},
 
-    "Península de Setúbal": {"freq": "122.830", "municipalities": ["Setúbal","Palmela","Sesimbra","Seixal","Almada"]},
+    "Grande Lisboa": {"freq": "125.805", "municipalities": ["Amadora","Cascais","Lisboa","Loures","Mafra","Odivelas","Oeiras","Sintra","Vila Franca de Xira"]},
 
-    "Alto Alentejo": {"freq": "126.155", "municipalities": ["Portalegre","Elvas","Ponte de Sor","Campo Maior"]},
+    "Península de Setúbal": {"freq": "122.830", "municipalities": ["Alcochete","Almada","Barreiro","Moita","Montijo","Palmela","Seixal","Sesimbra","Setúbal"]},
 
-    "Alentejo Central": {"freq": "125.355", "municipalities": ["Évora","Montemor-o-Novo","Arraiolos","Vendas Novas"]},
+    "Alentejo Central": {"freq": "125.355", "municipalities": ["Alandroal","Arraiolos","Borba","Estremoz","Évora","Montemor-o-Novo","Mora","Mourão","Portel","Redondo","Reguengos de Monsaraz","Vendas Novas","Viana do Alentejo","Vila Viçosa"]},
 
-    "Alentejo Litoral": {"freq": "129.690", "municipalities": ["Sines","Grândola","Odemira","Santiago do Cacém"]},
+    "Alentejo Litoral": {"freq": "129.690", "municipalities": ["Alcácer do Sal","Grândola","Odemira","Santiago do Cacém","Sines"]},
 
-    "Baixo Alentejo": {"freq": "124.705", "municipalities": ["Beja","Moura","Mértola","Ourique"]},
+    "Baixo Alentejo": {"freq": "124.705", "municipalities": ["Aljustrel","Almodôvar","Alvito","Barrancos","Beja","Castro Verde","Cuba","Ferreira do Alentejo","Mértola","Moura","Ourique","Serpa","Vidigueira"]},
 
-    "Algarve": {"freq": "129.805", "municipalities": ["Faro","Albufeira","Castro Marim","Silves","Monchique","Vila Real de Santo António","Alcoutim","Portimão","Loulé","Tavira","Lagos"]},
+    "Alto Alentejo": {"freq": "126.155", "municipalities": ["Alter do Chão","Arronches","Avis","Campo Maior","Castelo de Vide","Crato","Elvas","Fronteira","Gavião","Marvão","Monforte","Nisa","Ponte de Sor","Portalegre"]},
+
+    "Algarve": {"freq": "129.805", "municipalities": ["Albufeira","Alcoutim","Aljezur","Castro Marim","Faro","Lagoa","Lagos","Loulé","Monchique","Olhão","Portimão","São Brás de Alportel","Silves","Tavira","Vila do Bispo","Vila Real de Santo António"]},
 }
 
 
