@@ -61,24 +61,6 @@ SUBREGIONAL_FREQUENCIES = {
 
 
 # --------------------------------------------------
-# NORMALIZATION (CRITICAL FIX)
-# --------------------------------------------------
-
-def normalize(text: str):
-
-    if not text:
-        return ""
-
-    return (
-        text.lower()
-        .replace("-", " ")
-        .split("(")[0]
-        .split(",")[0]
-        .strip()
-    )
-
-
-# --------------------------------------------------
 # FIRE STATE
 # --------------------------------------------------
 
@@ -118,10 +100,31 @@ def get_style_id(state):
 
 
 # --------------------------------------------------
-# FREQUENCY LOOKUP (ROBUST)
+# NORMALIZE
+# --------------------------------------------------
+
+def normalize(text: str):
+
+    if not text:
+        return ""
+
+    return (
+        text.lower()
+        .replace("-", " ")
+        .split("(")[0]
+        .split(",")[0]
+        .strip()
+    )
+
+
+# --------------------------------------------------
+# SUBREGIONAL FREQUENCY
 # --------------------------------------------------
 
 def get_subregional_frequency(municipality):
+
+    if not municipality:
+        return "CMD SUB-REGIONAL DESCONHECIDO"
 
     m = normalize(municipality)
 
@@ -156,7 +159,9 @@ def clean_freguesia(name: str):
 
 def build_kml(occurrences):
 
-    local_time = datetime.now(ZoneInfo("Europe/Lisbon")).strftime("%H:%M")
+    local_time = datetime.now(
+        ZoneInfo("Europe/Lisbon")
+    ).strftime("%H:%M")
 
     styles = """
     <Style id="red"><IconStyle><color>ff0000ff</color><scale>1.3</scale></IconStyle></Style>
@@ -186,22 +191,37 @@ def build_kml(occurrences):
 
         cmd_frequency = get_subregional_frequency(municipality)
 
+        description = f"""
+<![CDATA[
+<b>Estado:</b> {state} | Updated @ {local_time}<br/>
+<br/>
+
+<b>{cmd_frequency}</b><br/>
+<br/>
+
+<b>🌬 Vento:</b> {wx.get('wind_speed', 'N/A')} kt<br/>
+<b>🧭 Direção:</b> {wx.get('wind_dir', 'N/A')}°<br/>
+<b>🌡 Temperatura:</b> {wx.get('temp', 'N/A')} °C<br/>
+<b>📊 QNH:</b> {wx.get('qnh', 'N/A')} hPa<br/>
+<br/>
+
+<b>Distrito:</b> {f.get('district', '')}<br/>
+<b>Concelho:</b> {municipality}<br/>
+<b>Freguesia:</b> {name}<br/>
+<b>Tipo:</b> {f.get('nature_desc', '')}<br/>
+]]>
+"""
+
         placemarks += f"""
-        <Placemark>
-            <name>{name}</name>
-            <styleUrl>#{style_id}</styleUrl>
-            <description><![CDATA[
-                <b>Estado:</b> {state} | Updated @ {local_time}<br/><br/>
-                <b>{cmd_frequency}</b><br/><br/>
-                <b>Wind:</b> {wx.get('wind_speed','')} kt<br/>
-                <b>Temp:</b> {wx.get('temp','')} °C<br/>
-                <b>Concelho:</b> {municipality}<br/>
-            ]]></description>
-            <Point>
-                <coordinates>{lon},{lat},0</coordinates>
-            </Point>
-        </Placemark>
-        """
+<Placemark>
+    <name>{name}</name>
+    <styleUrl>#{style_id}</styleUrl>
+    <description>{description}</description>
+    <Point>
+        <coordinates>{lon},{lat},0</coordinates>
+    </Point>
+</Placemark>
+"""
 
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
