@@ -189,6 +189,10 @@ def build_kml(occurrences):
         state = get_fire_state(f)
         style_id = get_style_id(state)
 
+        aerial = f.get("aerial", 0)
+        ground = f.get("ground", 0)
+        operatives = f.get("operatives", 0)
+
         wx = get_weather(lat, lon) or {}
 
         cmd_frequency = get_subregional_frequency(municipality)
@@ -215,6 +219,12 @@ def build_kml(occurrences):
 <![CDATA[
 <b>Estado:</b> {state} | Updated @ {local_time}<br/>
 <b>Início:</b> {started_at_local}<br/>
+<b>Tipo:</b> {f.get('nature_desc', '')}<br/>
+<br/>
+
+<b>Meios Aéreos:</b> {aerial}<br/>
+<b>Meios Terrestres:</b> {ground}<br/>
+<b>Operacionais:</b> {operatives}<br/>
 <br/>
 
 <b>{cmd_frequency}</b><br/>
@@ -229,7 +239,7 @@ def build_kml(occurrences):
 <b>Distrito:</b> {f.get('district', '')}<br/>
 <b>Concelho:</b> {municipality}<br/>
 <b>Freguesia:</b> {name}<br/>
-<b>Tipo:</b> {f.get('nature_desc', '')}<br/>
+
 ]]>
 """
 
