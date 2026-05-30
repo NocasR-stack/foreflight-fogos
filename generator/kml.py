@@ -230,6 +230,11 @@ def build_kml(occurrences):
 <b>{cmd_frequency}</b><br/>
 <br/>
 
+<b>IPMA METAR:</b> {f.get('ipma_metar', 'N/A')}<br/>
+<b>📍 Estação IPMA:</b> {f.get('ipma_station', 'N/A')} ({f.get('ipma_distance', 'N/A')} km)<br/>
+<br/>
+
+<b>Open-Meteo Forecast<br/>
 <b>🌬 Vento:</b> {wx.get('wind_speed', 'N/A')} kt<br/>
 <b>🧭 Direção:</b> {wx.get('wind_dir', 'N/A')}°<br/>
 <b>🌡 Temperatura:</b> {wx.get('temp', 'N/A')} °C<br/>

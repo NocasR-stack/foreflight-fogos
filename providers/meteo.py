@@ -1,16 +1,14 @@
 import math
 import requests
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 # ----------------------------
-# CONVERTER COORDENADAS PARA DMS
+# COORD DMS
 # ----------------------------
 def to_dms(value, is_lat=True):
-    direction = ""
-    if is_lat:
-        direction = "N" if value >= 0 else "S"
-    else:
-        direction = "E" if value >= 0 else "W"
+    direction = "N" if value >= 0 else "S" if is_lat else "E" if value >= 0 else "W"
 
     value = abs(value)
     degrees = int(value)
@@ -22,7 +20,7 @@ def to_dms(value, is_lat=True):
 
 
 # ----------------------------
-# DISTÂNCIA SIMPLES (Haversine)
+# DISTÂNCIA
 # ----------------------------
 def distance(lat1, lon1, lat2, lon2):
     R = 6371
@@ -38,7 +36,7 @@ def distance(lat1, lon1, lat2, lon2):
 
 
 # ----------------------------
-# ESTAÇÃO METEO MAIS PRÓXIMA (METAR simples via aeroportos)
+# AIRPORTS (fallback METAR)
 # ----------------------------
 AIRPORTS = [
     {"name": "Lisboa", "lat": 38.7742, "lon": -9.1342, "icao": "LPPT"},
@@ -62,12 +60,12 @@ def nearest_station(lat, lon):
 
 
 # ----------------------------
-# METAR FETCH (AVWX API opcional)
+# METAR FETCH (aero fallback)
 # ----------------------------
 def get_metar(icao):
     try:
         url = f"https://api.checkwx.com/metar/{icao}/decoded"
-        headers = {"X-API-Key": "demo"}  # pode ser substituído por API key real
+        headers = {"X-API-Key": "demo"}
 
         r = requests.get(url, headers=headers, timeout=5)
         data = r.json()
@@ -89,9 +87,74 @@ def get_metar(icao):
 
 
 # ----------------------------
-# ENRICH OCCURRENCE
+# IPMA METEO (NOVA CAMADA)
+# ----------------------------
+def get_ipma_weather(lat, lon):
+    try:
+        stations_url = "https://api.ipma.pt/open-data/observation/meteorology/stations.json"
+        obs_url = "https://api.ipma.pt/open-data/observation/meteorology/stations/observations.json"
+
+        stations = requests.get(stations_url, timeout=3).json().get("data", [])
+        obs = requests.get(obs_url, timeout=3).json().get("data", [])
+
+        best = None
+        best_d = float("inf")
+
+        for s in stations:
+            d = distance(lat, lon, s.get("lat"), s.get("lon"))
+            if d < best_d:
+                best_d = d
+                best = s
+
+        if not best:
+            return None
+
+        station_id = best.get("globalIdLocal")
+
+        obs_match = None
+        for o in obs:
+            if o.get("idEstacao") == station_id:
+                obs_match = o
+                break
+
+        if not obs_match:
+            return None
+
+        wind_dir = obs_match.get("dirVento")
+        wind_speed = obs_match.get("intensidadeVento")
+        gust = obs_match.get("rajadaMax")
+        temp = obs_match.get("temperatura")
+        qnh = obs_match.get("pressao")
+
+        # METAR-like
+        gust_part = f"G{int(gust)}" if gust else ""
+        metar = f"{int(wind_dir):03d}{int(wind_speed):02d}{gust_part}KT {int(temp)}°C Q{int(qnh)}"
+
+        # time
+        ts = obs_match.get("dataHora")
+        if ts:
+            dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+            local = dt.astimezone(ZoneInfo("Europe/Lisbon"))
+            time_str = local.strftime("%d%m%y %H%M") + "L"
+        else:
+            time_str = "////// ////L"
+
+        return {
+            "metar": metar,
+            "station": best.get("local") or best.get("name"),
+            "distance": round(best_d, 1),
+            "time": time_str
+        }
+
+    except:
+        return None
+
+
+# ----------------------------
+# ENRICH OCCURRENCE (FINAL)
 # ----------------------------
 def enrich_occurrence(o):
+
     lat = o.get("lat")
     lon = o.get("lon")
 
@@ -99,7 +162,20 @@ def enrich_occurrence(o):
     o["lat_dms"] = to_dms(lat, True)
     o["lon_dms"] = to_dms(lon, False)
 
-    # METEO
+    # ----------------------------
+    # IPMA (PRIORIDADE)
+    # ----------------------------
+    ipma = get_ipma_weather(lat, lon)
+
+    if ipma:
+        o["ipma_metar"] = ipma["metar"]
+        o["ipma_station"] = ipma["station"]
+        o["ipma_distance"] = ipma["distance"]
+        o["ipma_time"] = ipma["time"]
+
+    # ----------------------------
+    # FALLBACK METAR AEROPORTO
+    # ----------------------------
     station = nearest_station(lat, lon)
 
     if station:
