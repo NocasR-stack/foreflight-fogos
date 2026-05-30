@@ -71,10 +71,10 @@ def get_fire_state(f):
     return {
         1: "FALSE ALARM",
         2: "FALSE ALERT",
-        3: "CLOSED",
+        3: "DISPATCHED",
         4: "INITIAL",
         5: "ACTIVE",
-        6: "ACTIVE",
+        6: "ARRIVAL TO",
         7: "RESOLUTION",
         8: "CONCLUSION",
         9: "SURVEILLANCE"
@@ -91,11 +91,13 @@ def get_style_id(state):
         "FALSE ALARM": "grey",
         "FALSE ALERT": "grey",
         "CLOSED": "green",
+        "DISPATCHED": "orange",
         "INITIAL": "orange",
+        "ARRIVAL TO": "red",
         "ACTIVE": "red",
         "RESOLUTION": "blue",
         "CONCLUSION": "grey",
-        "SURVEILLANCE": "blue"
+        "SURVEILLANCE": "blue",
     }.get(state, "grey")
 
 
@@ -191,9 +193,28 @@ def build_kml(occurrences):
 
         cmd_frequency = get_subregional_frequency(municipality)
 
+        # -----------------------------
+        # STARTED_AT (UTC -> Lisboa)
+        # -----------------------------
+
+        started_at_raw = f.get("started_at")
+        started_at_local = "N/A"
+
+        if started_at_raw:
+            try:
+                started_dt = datetime.fromisoformat(
+                    started_at_raw.replace("Z", "+00:00")
+                )
+                started_at_local = started_dt.astimezone(
+                    ZoneInfo("Europe/Lisbon")
+                ).strftime("%H:%M") + "L"
+            except Exception:
+                started_at_local = "N/A"
+
         description = f"""
 <![CDATA[
 <b>Estado:</b> {state} | Updated @ {local_time}<br/>
+<b>Início:</b> {started_at_local}<br/>
 <br/>
 
 <b>{cmd_frequency}</b><br/>
