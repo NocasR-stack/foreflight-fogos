@@ -207,7 +207,7 @@ def build_kml(occurrences):
                 )
                 started_at_local = started_dt.astimezone(
                     ZoneInfo("Europe/Lisbon")
-                ).strftime("%H:%M") + "L"
+                ).strftime("%d-%m-%y %H:%M") + "L"
             except Exception:
                 started_at_local = "N/A"
 
